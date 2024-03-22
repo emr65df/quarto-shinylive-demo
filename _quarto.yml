@@ -4,17 +4,17 @@ project:
   - shinylive-sw.js
 
 website:  
-  repo-url: https://github.com/coatless-quarto/r-shinylive-demo
+  repo-url: https://github.com/emr65df/r-shinylive-demo
   repo-actions: [edit, issue]
   title: "r-shinylive in Quarto"
   navbar:
     search: false
     left:
-      - text: "Tutorial (Home)"
+      - text: "a"
         file: index.qmd
-      - text: "Joe's Shiny App"
+      - text: "b"
         file: R-shinylive-demo.qmd
-      - text: "Skeletal Template"
+      - text: "c"
         file: template-r-shinylive.qmd
 
 format:

@@ -1,5 +1,5 @@
 ---
-title: "Joe Cheng's r-shinylive App in a Quarto document!"
+title: "r-shinylive-demo with wildlife data!"
 format:
   html:
     resources: 
@@ -8,60 +8,50 @@ filters:
   - shinylive
 ---
 
-This document contains just the [Shiny App source code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299) used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile!)
-
-For a detailed breakdown, please see the [index.qmd](index.qmd) file.
-
 ```{shinylive-r}
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
 library(bslib)
+library(datasets)
+library(zoo)
+library(dplyr)
+library(ggplot2)
 
-# Define UI for app that draws a histogram ----
+sunspot.month <- datasets::sunspot.month
+sunspots_df <- data.frame(count = as.matrix(sunspot.month), date=as.POSIXct(zoo::as.yearmon(time(sunspot.month))))
+
+
+
+# Define UI for app ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
-    numericInput("n", "Sample count", 100),
-    checkboxInput("pause", "Pause", FALSE),
+    selectInput("year_of_data",
+                label = "Choose Year to Display",
+                choices = list(1749,
+                               1849,
+                               1949),
+                selected = 1849)
   ),
-  plotOutput("plot", width=1100)
+  plotOutput("column_plot", width=1100)
 )
-
+  
 server <- function(input, output, session) {
+  
   data <- reactive({
-    input$resample
-    if (!isTRUE(input$pause)) {
-      invalidateLater(1000)
-    }
-    rnorm(input$n)
+    sunspots_df %>%
+  filter(year(date) == input$year_of_data) 
   })
   
-  output$plot <- renderPlot({
-    hist(data(),
-      breaks = 40,
-      xlim = c(-2, 2),
-      ylim = c(0, 1),
-      lty = "blank",
-      xlab = "value",
-      freq = FALSE,
-      main = ""
-    )
+  output$column_plot <- renderPlot({
+  ggplot(data()) + 
+  geom_col(aes(x = date, y = count), color = "orange", fill = "darkorange4") +
+  scale_x_datetime(date_label = "%m", breaks = "1 month", expand=c(0,0)) +
+  scale_y_continuous(labels = NULL, breaks = NULL) + 
+  labs(y = "Sunspot Count", x = "\nMonth") +
+  ggtitle(paste0("Sunspot Counts in the Year ", input$year_of_data)) +
+  theme_classic()
     
-    x <- seq(from = -2, to = 2, length.out = 500)
-    y <- dnorm(x)
-    lines(x, y, lwd=1.5)
-    
-    lwd <- 5
-    abline(v=0, col="red", lwd=lwd, lty=2)
-    abline(v=mean(data()), col="blue", lwd=lwd, lty=1)
-
-    legend(legend = c("Normal", "Mean", "Sample mean"),
-      col = c("black", "red", "blue"),
-      lty = c(1, 2, 1),
-      lwd = c(1, lwd, lwd),
-      x = 1,
-      y = 0.9
-    )
   }, res=140)
 }
 
@@ -132,7 +122,7 @@ server <- function(input, output, session) {
       lwd = c(1, lwd, lwd),
       x = 1,
       y = 0.9
-    )
+    ) 
   }, res=140)
 }
 
