@@ -28,12 +28,8 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  library(datasets)
-  library(ggplot2)
-  
-  data <- datasets::sunspot.month
-  autoplot(data)
-
+  output$column_plot <- renderPlot({
+  }, res=140)
 }
 
 # Create Shiny app ----
