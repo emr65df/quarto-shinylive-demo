@@ -28,10 +28,11 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  set.seed(123)
-  n <- rnorm(50)
+data <- reactive({
+    rnorm(input$year_of_data)
+  })
   output$column_plot <- renderPlot({
-    hist(n())
+    hist(data())
   }, res=140)
 }
 
