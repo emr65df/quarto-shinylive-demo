@@ -13,8 +13,8 @@ filters:
 #| viewerHeight: 600
 library(shiny)
 library(bslib)
-library(dplyr)
 
+beaver_data <- datasets::beaver2
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
@@ -31,7 +31,7 @@ ui <- page_sidebar(
 
 server <- function(input, output, session) {
   data <- reactive({
-    tmp <- beaver2 %>% select(input$dataframe_column)
+    tmp <- beaver_data %>% select(input$dataframe_column)
     return(tmp)
   })
   
