@@ -14,25 +14,28 @@ filters:
 library(shiny)
 library(bslib)
 
+random_data <- data.frame(b = rbeta(100, 1,2), n = rnorm(100))
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
-    selectInput("year_of_data",
-                                label = "Choose Year to Display",
-                                choices = list(1749,
-                                               1849,
-                                               1949),
-                                selected = 1749),
+                    selectInput("dataframe_column",
+                                label = "Choose Distribution",
+                                choices = list("b",
+                                               "n"),
+                                selected = "b")
   ),
   plotOutput("plot", width=1100)
 )
 
 server <- function(input, output, session) {
-data <- reactive({
-    rnorm(input$year_of_data)
+  data <- reactive({
+    random_data$input$dataframe_column
   })
-  output$column_plot <- renderPlot({
-    hist(data())
+  
+  output$plot <- renderPlot({
+    hist(data()
+  )
+   
   }, res=140)
 }
 
