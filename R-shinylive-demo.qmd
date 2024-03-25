@@ -13,25 +13,30 @@ filters:
 #| viewerHeight: 600
 library(shiny)
 library(bslib)
+library(dplyr)
 
-beaver_data <- datasets::beaver2
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
                     selectInput("dataframe_column",
-                                label = "Choose Distribution",
-                                choices = list("b",
-                                               "n"),
-                                selected = "b")
+                                label = "Choose Column",
+                                choices = list("day",
+                                               "time",
+                                               "temp",
+                                               "activ"),
+                                selected = "day")
   ),
   plotOutput("plot", width=1100)
 )
 
 server <- function(input, output, session) {
-
+  data <- reactive({
+    tmp <- beaver2 %>% select(input$dataframe_column)
+    return(tmp)
+  })
   
   output$plot <- renderPlot({
-    hist(beaver2$temp
+    hist(data()
   )
    
   }, res=140)
