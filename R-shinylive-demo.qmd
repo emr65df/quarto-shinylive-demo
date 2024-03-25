@@ -14,7 +14,7 @@ filters:
 library(shiny)
 library(bslib)
 
-random_data <- data.frame(b = rbeta(100, 1,2), n = rnorm(100))
+beaver_data <- datasets::beaver2
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
@@ -31,7 +31,7 @@ server <- function(input, output, session) {
 
   
   output$plot <- renderPlot({
-    hist(random_data$b
+    hist(beaver2$temp
   )
    
   }, res=140)
