@@ -31,13 +31,12 @@ ui <- page_sidebar(
 
 server <- function(input, output, session) {
   data <- reactive({
-    tmp <- beaver_data$input$dataframe_column
+    tmp <- beaver_data
     return(tmp)
   })
   
   output$plot <- renderPlot({
-    hist(data()
-  )
+    hist(beaver_data$input$dataframe_column)
    
   }, res=140)
 }
