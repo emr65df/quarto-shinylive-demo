@@ -28,6 +28,11 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  library(datasets)
+  library(ggplot2)
+  
+  data <- datasets::sunspot.month
+  autoplot(data)
 
 }
 
