@@ -28,7 +28,10 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  set.seed(123)
+  n <- rnorm(50)
   output$column_plot <- renderPlot({
+    hist(n)
   }, res=140)
 }
 
