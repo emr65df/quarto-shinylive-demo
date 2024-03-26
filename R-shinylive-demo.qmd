@@ -14,29 +14,30 @@ filters:
 library(shiny)
 library(bslib)
 
-beaver_data <- datasets::beaver2
+sunspots_df <- data.frame(count = as.matrix(sunspot.month),
+                          date = floor(time(sunspot.month)))
+
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
   sidebar = sidebar(open = "open",
-                    selectInput("dataframe_column",
-                                label = "Choose Column",
-                                choices = list("day",
-                                               "time",
-                                               "temp",
-                                               "activ"),
-                                selected = "day")
+                    selectInput("year_of_data",
+                                label = "Choose Year to Display",
+                                choices = list(1749,
+                                               1849,
+                                               1949),
+                                selected = 1749)
   ),
   plotOutput("plot", width=1100)
 )
 
 server <- function(input, output, session) {
-  data <- reactive({
-    tmp <- beaver_data %>% select(.data[[input$dataframe_column]])
-    return(tmp)
-  })
-  
+  # data <- reactive({
+  #   tmp <- beaver_data[[input$dataframe_column]]
+  #   return(tmp)
+  # })
+  # 
   output$plot <- renderPlot({
-    hist(data())
+    hist(sunspots_df[sunspots_df$date == input$year_of_data,"count"])
    
   }, res=140)
 }
