@@ -2,7 +2,8 @@ project:
   type: website
   resources: 
   - shinylive-sw.js
-
+execute: 
+  freeze: auto
 website:  
   repo-url: https://github.com/emr65df/r-shinylive-demo
   repo-actions: [edit, issue]
