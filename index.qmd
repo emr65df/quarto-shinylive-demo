@@ -1,5 +1,5 @@
 ---
-title: "Public Service Company of Colorado Exploration"
+title: "Original Code for RShinylive + Quarto"
 format:
   html:
     grid: 
@@ -9,7 +9,6 @@ format:
 filters:
   - shinylive
 ---
-## Data Load and Checking
 
 ```{shinylive-r}
 #| standalone: true

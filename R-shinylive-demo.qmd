@@ -1,5 +1,5 @@
 ---
-title: "r-shinylive-demo with some data!"
+title: "My RShinylive Demo with R sunspot.month Data"
 format:
   html:
     resources: 
