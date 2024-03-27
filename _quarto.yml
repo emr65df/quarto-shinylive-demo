@@ -10,11 +10,11 @@ website:
   navbar:
     search: false
     left:
-      - text: "a"
+      - text: "Previous Demo Code"
         file: index.qmd
-      - text: "b"
+      - text: "My Demo Code"
         file: R-shinylive-demo.qmd
-      - text: "c"
+      - text: "Template"
         file: template-r-shinylive.qmd
 
 format:
