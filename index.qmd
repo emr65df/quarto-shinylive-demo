@@ -11,12 +11,6 @@ filters:
 ---
 ## Data Load and Checking
 
-```{r}
-#| include: FALSE
-library(readr, quietly = TRUE)
-fww_18_20 <- read_csv("./data/fww_18_20.csv")
-```
-
 ```{shinylive-r}
 #| standalone: true
 #| viewerHeight: 600
