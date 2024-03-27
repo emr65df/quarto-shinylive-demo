@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "template-r-shinylive.html",
+    "href": "template-r-shinylive.html",
+    "title": "Template for r-shinylive Quarto document",
+    "section": "",
+    "text": "Important\n\n\n\nPlease switch {{shinylive-r}} to {shinylive-r}. We’ve suppressed this example from running by using {{}}.\n\n\n```{shinylive-r}\n#| standalone: true\n\nui &lt;- ...\n\nserver &lt;- function(input, output, session) {\n  ...\n}\n\nshinyApp(ui, server)\n```\nFull Skeletal Document Source:\n---\ntitle: \"Template for r-shinylive Quarto document\"\nformat:\n  html:\n    resources: \n      - shinylive-sw.js\nfilters:\n  - shinylive\n---\n\n```{shinylive-r}\n#| standalone: true\n\nui &lt;- ...\n\nserver &lt;- function(input, output, session) {\n  ...\n}\n\nshinyApp(ui, server)\n```"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "",
+    "text": "#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n    numericInput(\"n\", \"Sample count\", 100),\n    checkboxInput(\"pause\", \"Pause\", FALSE),\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  data &lt;- reactive({\n    input$resample\n    if (!isTRUE(input$pause)) {\n      invalidateLater(1000)\n    }\n    rnorm(input$n)\n  })\n  \n  output$plot &lt;- renderPlot({\n    hist(data(),\n      breaks = 40,\n      xlim = c(-2, 2),\n      ylim = c(0, 1),\n      lty = \"blank\",\n      xlab = \"value\",\n      freq = FALSE,\n      main = \"\"\n    )\n    \n    x &lt;- seq(from = -2, to = 2, length.out = 500)\n    y &lt;- dnorm(x)\n    lines(x, y, lwd=1.5)\n    \n    lwd &lt;- 5\n    abline(v=0, col=\"red\", lwd=lwd, lty=2)\n    abline(v=mean(data()), col=\"blue\", lwd=lwd, lty=1)\n\n    legend(legend = c(\"Normal\", \"Mean\", \"Sample mean\"),\n      col = c(\"black\", \"red\", \"blue\"),\n      lty = c(1, 2, 1),\n      lwd = c(1, lwd, lwd),\n      x = 1,\n      y = 0.9\n    )\n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)"
+  },
+  {
+    "objectID": "index.html#data-load-and-checking",
+    "href": "index.html#data-load-and-checking",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "",
+    "text": "#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n    numericInput(\"n\", \"Sample count\", 100),\n    checkboxInput(\"pause\", \"Pause\", FALSE),\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  data &lt;- reactive({\n    input$resample\n    if (!isTRUE(input$pause)) {\n      invalidateLater(1000)\n    }\n    rnorm(input$n)\n  })\n  \n  output$plot &lt;- renderPlot({\n    hist(data(),\n      breaks = 40,\n      xlim = c(-2, 2),\n      ylim = c(0, 1),\n      lty = \"blank\",\n      xlab = \"value\",\n      freq = FALSE,\n      main = \"\"\n    )\n    \n    x &lt;- seq(from = -2, to = 2, length.out = 500)\n    y &lt;- dnorm(x)\n    lines(x, y, lwd=1.5)\n    \n    lwd &lt;- 5\n    abline(v=0, col=\"red\", lwd=lwd, lty=2)\n    abline(v=mean(data()), col=\"blue\", lwd=lwd, lty=1)\n\n    legend(legend = c(\"Normal\", \"Mean\", \"Sample mean\"),\n      col = c(\"black\", \"red\", \"blue\"),\n      lty = c(1, 2, 1),\n      lwd = c(1, lwd, lwd),\n      x = 1,\n      y = 0.9\n    )\n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)"
+  },
+  {
+    "objectID": "index.html#video-tutorial",
+    "href": "index.html#video-tutorial",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Video Tutorial",
+    "text": "Video Tutorial\nPrefer a hands-on visual guide? Check out the following YouTube video:\n\n\n\nCreating a Serverless Shiny App using Quarto with R Shinylive\n\n\nWe’ll go through every step and provide some commentary along the way!"
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Installation",
+    "text": "Installation\nStep 1: Install the r-shinylive R package. It’s currently hosted on GitHub and can be obtained from the R console using the following command:\n# Install the 'pak' package manager if you haven't already\ninstall.packages(\"pak\")\n# Install 'r-shinylive' using 'pak'\npak::pak(\"posit-dev/r-shinylive\")"
+  },
+  {
+    "objectID": "index.html#setting-up-your-quarto-project",
+    "href": "index.html#setting-up-your-quarto-project",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Setting Up Your Quarto Project",
+    "text": "Setting Up Your Quarto Project\nStep 2: Create a new Quarto project. Open your terminal and execute the following command:\nquarto create project default\n\n\n\nScreenshot showing the Terminal tab of RStudio with the command to create a Quarto project.\n\n\nWhile creating the project, you’ll be prompted to specify a directory name. This name will also serve as the filename for your Quarto document. It’s crucial to note that skipping this step will result in the absence of a _quarto.yml file, leading to an error when you attempt to render the document. The error message will resemble the following:\nERROR:\nThe shinylive extension must be used in a Quarto project directory\n(with a _quarto.yml file).\nEnsure that the contents of the _quarto.yml file match the following structure:\nproject:\n  title: \"R-shinylive-demo\"\nHere, the title field should contain the name of the Quarto file up to the extension."
+  },
+  {
+    "objectID": "index.html#installing-the-quarto-extension-for-r-shinylive",
+    "href": "index.html#installing-the-quarto-extension-for-r-shinylive",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Installing the Quarto Extension for r-shinylive",
+    "text": "Installing the Quarto Extension for r-shinylive\nStep 3: Install the Quarto extension for shinylive. In the Terminal tab, run the following command:\nquarto add quarto-ext/shinylive\n\n\n\nScreenshot showing the Terminal tab of RStudio with the Quarto Extension installation command."
+  },
+  {
+    "objectID": "index.html#including-the-shiny-app-in-your-quarto-document",
+    "href": "index.html#including-the-shiny-app-in-your-quarto-document",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Including the Shiny App in Your Quarto Document",
+    "text": "Including the Shiny App in Your Quarto Document\nStep 4: To include a Shiny app directly in your Quarto file (.qmd), you need to add a filter key for shinylive at the top of the desired Quarto file. Open your Quarto file and add the following YAML header:\nfilters:\n  - shinylive\nStep 5: You can insert the code for a Shiny application in a code block marked with {shinylive-r}. Below is a skeletal example of how your code block might look:\n---\ntitle: \"Our first r-shinylive Quarto document!\"\nfilters:\n  - shinylive\n---\n\n```{shinylive-r}\n#| standalone: true\n\nlibrary(shiny)\n\n# Define your Shiny UI here\nui &lt;- fluidPage(\n  # Your UI components go here\n)\n\n# Define your Shiny server logic here\nserver &lt;- function(input, output, session) {\n  # Your server code goes here\n}\n\n# Create and launch the Shiny app\nshinyApp(ui, server)\n```\nPlease note that the code block must include #| standalone: true, which indicates that the code represents a complete standalone Shiny application. In the future, Quarto will hopefully support Shiny applications with parts spread throughout the document.\nFor an example file, you can refer to this bare-bones implementation: template-r-shinylive.qmd\nWith this in mind, let’s use Joe’s shiny app inside our code block. So, we’ll end up using:\n```{shinylive-r}\n#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n    numericInput(\"n\", \"Sample count\", 100),\n    checkboxInput(\"pause\", \"Pause\", FALSE),\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  data &lt;- reactive({\n    input$resample\n    if (!isTRUE(input$pause)) {\n      invalidateLater(1000)\n    }\n    rnorm(input$n)\n  })\n  \n  output$plot &lt;- renderPlot({\n    hist(data(),\n      breaks = 40,\n      xlim = c(-2, 2),\n      ylim = c(0, 1),\n      lty = \"blank\",\n      xlab = \"value\",\n      freq = FALSE,\n      main = \"\"\n    )\n    \n    x &lt;- seq(from = -2, to = 2, length.out = 500)\n    y &lt;- dnorm(x)\n    lines(x, y, lwd=1.5)\n    \n    lwd &lt;- 5\n    abline(v=0, col=\"red\", lwd=lwd, lty=2)\n    abline(v=mean(data()), col=\"blue\", lwd=lwd, lty=1)\n\n    legend(legend = c(\"Normal\", \"Mean\", \"Sample mean\"),\n      col = c(\"black\", \"red\", \"blue\"),\n      lty = c(1, 2, 1),\n      lwd = c(1, lwd, lwd),\n      x = 1,\n      y = 0.9\n    )\n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)\n```\nYou can view a standalone version of Joe’s app here: R-shinylive-demo.qmd"
+  },
+  {
+    "objectID": "index.html#rendering-your-quarto-document",
+    "href": "index.html#rendering-your-quarto-document",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Rendering Your Quarto Document",
+    "text": "Rendering Your Quarto Document\nStep 6: Once you are satisfied with your Shiny app and content, render the document by pressing the Render button in RStudio.\n\n\n\nPress the render button in RStudio\n\n\nOr type in the Terminal tab:\nquarto preview R-shinylive-demo.qmd --no-browser --no-watch-inputs"
+  },
+  {
+    "objectID": "index.html#folder-structure",
+    "href": "index.html#folder-structure",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Folder Structure",
+    "text": "Folder Structure\nDuring the render process, the output directory should contain the following structure:\n.\n├── _extensions\n│   └── quarto-ext/shinylive # Added by 'quarto add'\n├── _quarto.yml              # Created by 'quarto create'\n├── R-shinylive-demo.html    # Rendered Document\n├── R-shinylive-demo.qmd     # Quarto Document with Shiny App\n├── R-shinylive-demo_files   # Supporting files\n└── shinylive-sw.js          # Service Worker"
+  },
+  {
+    "objectID": "index.html#publishing-your-quarto-document",
+    "href": "index.html#publishing-your-quarto-document",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Publishing Your Quarto Document",
+    "text": "Publishing Your Quarto Document\nStep 7: Once you are satisfied with your shinylive app and Quarto document, it’s time to publish your work. There are multiple options for publishing with Quarto, and we’ll present two of them. Choose the option that best suits your needs for sharing and distributing your Quarto document with your embedded shinylive app.\nOption 1: Publish to GitHub Pages\nTo make your Quarto document accessible on GitHub Pages via Quarto, use the following command in your terminal:\nquarto publish gh-pages\nThis option is great if you want to share your document through a GitHub Pages website.\nOption 2: Publish to Quarto Pub\nAlternatively, you can publish your Quarto document on Quarto Pub via Quarto. Use the following command in your terminal:\nquarto publish quarto-pub\nThis option provides you with a shareable link for easy access by others and is a good choice if you prefer a dedicated platform for your documents.\n\nA Quick Fix for Service Worker Inclusion\nIf you’ve encountered issues with the quarto publish command not including the required service worker JavaScript file, you can quickly resolve this by adding the following lines under the html key in your document header:\nformat:\n  html:\n    resources: \n      - shinylive-sw.js\nThis addition ensures that the necessary service worker JavaScript file (shinylive-sw.js) is included when you publish your Quarto document. The Quarto team is aware of the issue regarding service workers not being uploaded automatically from extensions.\nIf you encounter this issue, you may see an error message in your browser’s JavaScript console that looks like:\nUncaught Error: ServiceWorker controller was not found!\nThe above error occurred in the &lt;Viewer&gt; component:\nBy implementing this quick fix, you can prevent this error and ensure the proper functioning of your shinylive app within your Quarto document."
+  },
+  {
+    "objectID": "index.html#advanced-optional-step-continuous-publishing-using-github-actions",
+    "href": "index.html#advanced-optional-step-continuous-publishing-using-github-actions",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "Advanced (Optional Step): Continuous Publishing Using GitHub Actions",
+    "text": "Advanced (Optional Step): Continuous Publishing Using GitHub Actions\nFor advanced users, you can set up continuous integration (CI) to automatically update your application whenever changes are committed to the Quarto document. This process involves creating a workflow for GitHub Actions and utilizing actions from r-lib/actions (for R installation) and quarto-dev/quarto-actions (for Quarto setup and publishing).\nFollow these steps to configure continuous publishing:\nStep 1: Create a .github/ folder in your repository if it doesn’t already exist. Place the workflows/ folder inside it. Then, create a workflow configuration file called publish-website.yml with the following content:\non:\n  push:\n    branches: [main, master]\n  release:\n    types: [published]\n  workflow_dispatch:\n\nname: demo-website\n\njobs:\n  demo-website:\n    runs-on: ubuntu-latest\n    concurrency:\n      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}\n    permissions:\n      contents: write\n    steps:\n      - name: \"Check out repository\"\n        uses: actions/checkout@v4\n\n      - name: \"Setup R\"\n        uses: r-lib/actions/setup-r@v2\n\n      - name: \"Setup R dependencies for Quarto's knitr engine\"\n        uses: r-lib/actions/setup-r-dependencies@v2\n        with:\n          packages:\n            any::shinylive\n            any::knitr\n            any::rmarkdown\n            any::downlit\n            any::xml2\n\n      - name: \"Set up Quarto\"\n        uses: quarto-dev/quarto-actions/setup@v2\n\n      - name: \"Render and Publish\"\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\nStep 2: Before deploying the action, use the quarto publish gh-pages command to set up the necessary gh-pages branch and repository GitHub Pages settings. This ensures that GitHub Actions can publish your Quarto document correctly.\nBy implementing this advanced setup, your Quarto document with the embedded shinylive app will automatically update whenever changes are pushed to the specified branches or when a release is published. This ensures that your audience always has access to the latest version of your interactive document."
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Public Service Company of Colorado Exploration",
+    "section": "References",
+    "text": "References\n\nShinylive R Package\nShinylive Quarto Extension: Static Shiny apps as Quarto code chunks"
+  },
+  {
+    "objectID": "R-shinylive-demo.html",
+    "href": "R-shinylive-demo.html",
+    "title": "r-shinylive-demo with some data!",
+    "section": "",
+    "text": "#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\nsunspots_df &lt;- data.frame(count = as.matrix(sunspot.month),\n                          date = floor(time(sunspot.month)))\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n                    selectInput(\"year_of_data\",\n                                label = \"Choose Year to Display\",\n                                choices = list(1749,\n                                               1849,\n                                               1949),\n                                selected = 1749)\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  # data &lt;- reactive({\n  #   tmp &lt;- beaver_data[[input$dataframe_column]]\n  #   return(tmp)\n  # })\n  # \n  output$plot &lt;- renderPlot({\n    plot(sunspots_df[sunspots_df$date == input$year_of_data, \"count\"])\n   # hist(sunspots_df[sunspots_df$date == input$year_of_data,\"count\"])\n   \n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)"
+  }
+]
