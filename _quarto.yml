@@ -15,8 +15,8 @@ website:
         file: index.qmd
       - text: "My Demo Code"
         file: R-shinylive-demo.qmd
-      - text: "Template"
-        file: template-r-shinylive.qmd
+      - text: "Future Demo"
+        file: future-r-shinylive.qmd
 
 format:
   html:

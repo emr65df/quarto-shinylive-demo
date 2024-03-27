@@ -1,0 +1,92 @@
+---
+title: "Future Demo"
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+filters:
+  - shinylive
+---
+
+:::callout-important
+Please switch `{{shinylive-r}}` to `{shinylive-r}`. We've suppressed this example from running by using `{{}}`.
+:::
+
+````md
+My goal is to include the packages below to make prettier stuff and maybe use my own data. r-shinylive just does not work when including other packages yet...
+
+```{shinylive-r}
+#| standalone: true
+
+library(shiny)
+library(bslib)
+library(datasets)
+library(lubridate)
+library(zoo)
+library(dplyr)
+library(ggplot2)
+
+# Define UI for app ----
+ui <- page_sidebar(
+  sidebar = sidebar(open = "open",
+                    selectInput("year_of_data",
+                                label = "Choose Year to Display",
+                                choices = list(1749,
+                                               1849,
+                                               1949),
+                                selected = 1749)
+  )#,
+  #plotOutput("column_plot", width=1100)
+)
+
+server <- function(input, output, session) {
+  sunspot.month <- datasets::sunspot.month
+  sunspots_df <- data.frame(count = as.matrix(sunspot.month),
+                            date=as.POSIXct(zoo::as.yearmon(time(sunspot.month))))
+  
+  data <- reactive({
+    sunspots_df %>%
+      dplyr::filter(year(date) == input$year_of_data) 
+  })
+  
+  output$column_plot <- renderPlot({
+    ggplot(data()) + 
+      geom_col(aes(x = date, y = count), color = "orange", fill = "darkorange4") +
+      scale_x_datetime(date_label = "%m", breaks = "1 month", expand=c(0,0)) +
+      scale_y_continuous(labels = NULL, breaks = NULL) + 
+      labs(y = "Sunspot Count", x = "\nMonth") +
+      ggtitle("Sunspot Counts in the Year ") +#put back later , input$year_of_data
+      theme_classic()
+    
+  }, res=140)
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
+````
+Full Skeletal Document Source: 
+
+````md
+---
+title: "Template for r-shinylive Quarto document"
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+filters:
+  - shinylive
+---
+
+```{shinylive-r}
+#| standalone: true
+
+ui <- ...
+
+server <- function(input, output, session) {
+  ...
+}
+
+shinyApp(ui, server)
+```
+````
