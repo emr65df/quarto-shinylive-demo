@@ -25,7 +25,12 @@ ui <- page_sidebar(
                                 choices = list(1749,
                                                1849,
                                                1949),
-                                selected = 1749)
+                                selected = 1749),
+                    radioButtons("change_plot",
+                                 label = "Visualize",
+                                 choices = c("point", "bar"),
+                                 selected = "point"
+        )
   ),
   plotOutput("plot", width=1100)
 )
