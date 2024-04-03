@@ -173,7 +173,11 @@ server &lt;- function(input, output, session) {
          xlab = "Month",
          main = paste0("Sunspots of ", input$year_of_data ),
          ylim = c(40,200),
-         xlim = c(1,12))
+         xlim = c(1,12),
+         xaxt = "n",
+         pch = 8)
+    axis(1, at = c(1:12), cex.axis = 1)
+    
    # hist(sunspots_df[sunspots_df$date == input$year_of_data,"count"])
    
   }, res=140)
