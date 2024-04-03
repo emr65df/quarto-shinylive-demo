@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "R-shinylive-demo.html",
-    "href": "R-shinylive-demo.html",
-    "title": "My RShinylive Demo with R sunspot.month Data",
-    "section": "",
-    "text": "#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\nsunspots_df &lt;- data.frame(count = as.matrix(sunspot.month),\n                          date = floor(time(sunspot.month)))\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n                    selectInput(\"year_of_data\",\n                                label = \"Choose Year to Display\",\n                                choices = list(1749,\n                                               1849,\n                                               1949),\n                                selected = 1749)\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  # data &lt;- reactive({\n  #   tmp &lt;- beaver_data[[input$dataframe_column]]\n  #   return(tmp)\n  # })\n  # \n  output$plot &lt;- renderPlot({\n    plot(sunspots_df[sunspots_df$date == input$year_of_data, \"count\"])\n   # hist(sunspots_df[sunspots_df$date == input$year_of_data,\"count\"])\n   \n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)"
-  },
-  {
     "objectID": "future-r-shinylive.html",
     "href": "future-r-shinylive.html",
     "title": "Future Demo",
@@ -89,5 +82,12 @@
     "title": "Original Code for RShinylive + Quarto",
     "section": "References",
     "text": "References\n\nShinylive R Package\nShinylive Quarto Extension: Static Shiny apps as Quarto code chunks"
+  },
+  {
+    "objectID": "R-shinylive-demo.html",
+    "href": "R-shinylive-demo.html",
+    "title": "My RShinylive Demo with R sunspot.month Data",
+    "section": "",
+    "text": "#| standalone: true\n#| viewerHeight: 600\nlibrary(shiny)\nlibrary(bslib)\n\nsunspots_df &lt;- data.frame(count = as.matrix(sunspot.month),\n                          date = floor(time(sunspot.month)))\n\n# Define UI for app that draws a histogram ----\nui &lt;- page_sidebar(\n  sidebar = sidebar(open = \"open\",\n                    selectInput(\"year_of_data\",\n                                label = \"Choose Year to Display\",\n                                choices = list(1749,\n                                               1849,\n                                               1949),\n                                selected = 1749)\n  ),\n  plotOutput(\"plot\", width=1100)\n)\n\nserver &lt;- function(input, output, session) {\n  # data &lt;- reactive({\n  #   tmp &lt;- beaver_data[[input$dataframe_column]]\n  #   return(tmp)\n  # })\n  # \n  output$plot &lt;- renderPlot({\n    plot(sunspots_df[sunspots_df$date == input$year_of_data, \"count\"],\n         ylab = \"Count\",\n         xlab = \"Month\",\n         main = paste0(\"Sunspots of \", input$year_of_data ),\n         ylim = c(40,200),\n         xlim = c(1,12))\n   # hist(sunspots_df[sunspots_df$date == input$year_of_data,\"count\"])\n   \n  }, res=140)\n}\n\n# Create Shiny app ----\nshinyApp(ui = ui, server = server)"
   }
 ]
