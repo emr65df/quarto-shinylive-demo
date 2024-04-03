@@ -37,7 +37,12 @@ server <- function(input, output, session) {
   # })
   # 
   output$plot <- renderPlot({
-    plot(sunspots_df[sunspots_df$date == input$year_of_data, "count"])
+    plot(sunspots_df[sunspots_df$date == input$year_of_data, "count"],
+         ylab = "Count",
+         xlab = "Month",
+         main = paste0("Sunspots of ", input$year_of_data ),
+         ylim = c(40,200),
+         xlim = c(1,12))
    # hist(sunspots_df[sunspots_df$date == input$year_of_data,"count"])
    
   }, res=140)
